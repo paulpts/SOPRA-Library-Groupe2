@@ -3,12 +3,15 @@ package library_boot.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import library_boot.view.Views;
 
 @Entity
 @Table(name="auteur")
@@ -16,12 +19,17 @@ public class Auteur {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@JsonView(Views.Common.class)
 	private Integer id;
+	@JsonView(Views.Common.class)
 	private String nom;
+	@JsonView(Views.Common.class)
 	private String prenom;
+	@JsonView(Views.Common.class)
 	private String nationalite;
 	
 	@OneToMany(mappedBy="auteur")
+	@JsonView(Views.AuteurWithLivre.class)
 	private List<Livre> livres = new ArrayList();
 	
 	public Auteur() {}
