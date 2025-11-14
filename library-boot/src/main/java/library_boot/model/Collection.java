@@ -30,6 +30,9 @@ public class Collection {
 		this.livres = livres;
 	}
 
+	public Collection() {
+	}
+
 	public Integer getId() {
 		return id;
 	}

@@ -1,5 +1,6 @@
 package library_boot.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.Entity;
@@ -21,7 +22,7 @@ public class Auteur {
 	private String nationalite;
 	
 	@OneToMany(mappedBy="auteur")
-	private List<Livres> livres = new List();
+	private List<Livre> livres = new ArrayList();
 	
 	public Auteur() {}
 
