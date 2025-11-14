@@ -1,11 +1,16 @@
 package library_boot.model;
 
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Table;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 
 @Entity
@@ -23,7 +28,9 @@ public class Editeur {
     @Column(name = "pays", length = 100, nullable = false)
     private String pays;
 
-    
+    @JsonIgnore
+    @OneToMany(mappedBy = "editeur")
+    private List<Livre> livres;
 
     public Editeur() {
     }
