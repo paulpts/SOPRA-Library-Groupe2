@@ -50,8 +50,10 @@ public class Livre {
 	
 	public Livre() {};
 	
-	public Livre(String titre, String resumer, LocalDate annee, Auteur auteur, Editeur editeur,
-			List<Collection> collection, Genre genre) {
+	
+	
+	public Livre(String titre, String resumer, LocalDate annee, Auteur auteur, Editeur editeur, Collection collection,
+			Genre genre) {
 		this.titre = titre;
 		this.resumer = resumer;
 		this.annee = annee;
@@ -60,6 +62,8 @@ public class Livre {
 		this.collection = collection;
 		this.genre = genre;
 	}
+
+
 
 	public Integer getId() {
 		return id;
