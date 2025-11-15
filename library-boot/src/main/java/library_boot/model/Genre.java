@@ -1,9 +1,7 @@
 package library_boot.model;
 
-import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
-
-import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
@@ -14,7 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.persistence.Version;
+import library_boot.view.Views;
 
 @Entity
 @Table(name="genre")
@@ -22,16 +20,17 @@ public class Genre {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	//@JsonView(Views.Common.class)
+	@JsonView(Views.Common.class)
 	private Integer id;
 	
 	@Column(length = 50,nullable = false)
-	//@JsonView(Views.Common.class)
+	@JsonView(Views.Common.class)
 	private String libelle;
 	
 	
 	@OneToMany(mappedBy="genre")
-	private List<Livres> livres;
+	@JsonView(Views.GenreWithLivre.class)
+	private List<Livre> livres= new ArrayList();
 
 	
 	
@@ -71,13 +70,13 @@ public class Genre {
 
 
 
-	public List<Livres> getLivres() {
+	public List<Livre> getLivres() {
 		return livres;
 	}
 
 
 
-	public void setLivres(List<Livres> livres) {
+	public void setLivres(List<Livre> livres) {
 		this.livres = livres;
 	}
 

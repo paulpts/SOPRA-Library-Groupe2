@@ -1,16 +1,19 @@
 package library_boot.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
-import jakarta.persistence.Table;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import library_boot.view.Views;
 
 
 @Entity
@@ -20,17 +23,20 @@ public class Editeur {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
+    @JsonView(Views.Common.class)
     private Integer id;
 
     @Column(name = "nom", length = 100, nullable = false)
+    @JsonView(Views.Common.class)
     private String nom;
 
     @Column(name = "pays", length = 100, nullable = false)
+    @JsonView(Views.Common.class)
     private String pays;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "editeur")
-    private List<Livre> livres;
+    @JsonView(Views.EditeurWithLivre.class)
+    private List<Livre> livres= new ArrayList();
 
     public Editeur() {
     }
