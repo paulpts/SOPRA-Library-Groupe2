@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,30 +15,28 @@ import jakarta.persistence.Table;
 import library_boot.view.Views;
 
 @Entity
-@Table(name="auteur")
-public class Auteur {
+@Table(name="collection")
+public class Collection {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@JsonView(Views.Common.class)
 	private Integer id;
+	@Column(length = 50,nullable = false)
 	@JsonView(Views.Common.class)
 	private String nom;
-	@JsonView(Views.Common.class)
-	private String prenom;
-	@JsonView(Views.Common.class)
-	private String nationalite;
+	@OneToMany(mappedBy="collection")
+	@JsonView(Views.CollectionWithLivre.class)
+	private List<Livre> livres= new ArrayList();
 	
-	@OneToMany(mappedBy="auteur")
-	@JsonView(Views.AuteurWithLivre.class)
-	private List<Livre> livres = new ArrayList();
-	
-	public Auteur() {}
-
-	public Auteur(String nom, String prenom, String nationalite) {
+	public Collection(Integer id, String nom, List<Livre> livres) {
+		super();
+		this.id = id;
 		this.nom = nom;
-		this.prenom = prenom;
-		this.nationalite = nationalite;
+		this.livres = livres;
+	}
+
+	public Collection() {
 	}
 
 	public Integer getId() {
@@ -56,30 +55,17 @@ public class Auteur {
 		this.nom = nom;
 	}
 
-	public String getPrenom() {
-		return prenom;
+	public List<Livre> getLivres() {
+		return livres;
 	}
 
-	public void setPrenom(String prenom) {
-		this.prenom = prenom;
-	}
-
-	public String getNationalite() {
-		return nationalite;
-	}
-
-	public void setNationalite(String nationalite) {
-		this.nationalite = nationalite;
+	public void setLivres(List<Livre> livres) {
+		this.livres = livres;
 	}
 
 	@Override
 	public String toString() {
-		return "Auteur [id=" + id + ", nom=" + nom + ", prenom=" + prenom + ", nationalite=" + nationalite + "]";
+		return "Collection [id=" + id + ", nom=" + nom + "]";
 	}
-	
-	
-	
-	
-	
 
 }

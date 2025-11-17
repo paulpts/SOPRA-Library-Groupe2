@@ -14,51 +14,52 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
-import library_boot.model.Auteur;
-import library_boot.service.AuteurService;
+import library_boot.model.Livre;
+import library_boot.service.LivreService;
 import library_boot.view.Views;
 
 @RestController
-@RequestMapping("/api/auteur")
-public class AuteurRestController {
+@RequestMapping("/api/livre")
+public class LivreRestController {
 	
 	@Autowired
-	private AuteurService autservice;
+	LivreService livreService;
 	
-	 @JsonView(Views.Auteur.class)
+	@JsonView(Views.Livre.class)
 	@GetMapping
-	public List<Auteur> allAuteurs()
+	public List<Livre> allLivres()
 	{
-		return autservice.getAll();
+		return livreService.getAll();
 	}
 
-	 @JsonView(Views.Auteur.class)
+	@JsonView(Views.Livre.class)
 	@GetMapping("/{id}")
-	public Auteur ficheAuteur(@PathVariable Integer id)
-	{
-		return autservice.getById(id);
+	public Livre ficheLivre(@PathVariable Integer id, Livre livre) {
+		return livreService.getById(id);
 	}
-	
-	 @JsonView(Views.Auteur.class)
+
+
+	@JsonView(Views.Livre.class)
 	@PostMapping
-	public Auteur createAuteur(@RequestBody Auteur auteur)
+	public Livre ajoutLivre(@RequestBody Livre livre)
 	{
-		return autservice.create(auteur);
+		return livreService.create(livre);
 	}
-	
-	 @JsonView(Views.Auteur.class)
+
+
+	@JsonView(Views.Livre.class)
 	@PutMapping("/{id}")
-	public Auteur modifierAuteur(@PathVariable Integer id,@RequestBody Auteur auteur)
+	public Livre modifierLivre(@PathVariable Integer id,@RequestBody Livre livre)
 	{
-		auteur.setId(id);
-		return autservice.update(auteur);
+		livre.setId(id);
+		return (Livre) livreService.update(livre);
 	}
-	
+
+
 	@DeleteMapping("/{id}")
-	public void deleteAuteur(@PathVariable Integer id)
-	{
-		autservice.deleteById(id);
+	public void supprimerLivre(@PathVariable Integer id) {
+		livreService.deleteById(id);
 	}
-	
+
 
 }

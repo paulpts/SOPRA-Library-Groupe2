@@ -14,51 +14,50 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
-import library_boot.model.Auteur;
-import library_boot.service.AuteurService;
+import library_boot.model.Genre;
+import library_boot.service.GenreService;
 import library_boot.view.Views;
 
 @RestController
-@RequestMapping("/api/auteur")
-public class AuteurRestController {
-	
+@RequestMapping("/api/genre")
+public class GenreRestController {
 	@Autowired
-	private AuteurService autservice;
-	
-	 @JsonView(Views.Auteur.class)
+	GenreService genreSrv;
+
+	@JsonView(Views.Genre.class)
 	@GetMapping
-	public List<Auteur> allAuteurs()
+	public List<Genre> allGenres()
 	{
-		return autservice.getAll();
+		return genreSrv.getAll();
 	}
 
-	 @JsonView(Views.Auteur.class)
+	@JsonView(Views.Genre.class)
 	@GetMapping("/{id}")
-	public Auteur ficheAuteur(@PathVariable Integer id)
+	public Genre ficheGenre(@PathVariable Integer id)
 	{
-		return autservice.getById(id);
+		return genreSrv.getById(id);
 	}
-	
-	 @JsonView(Views.Auteur.class)
+
+	@JsonView(Views.Genre.class)
 	@PostMapping
-	public Auteur createAuteur(@RequestBody Auteur auteur)
+	public Genre ajouterGenre(@RequestBody Genre Genre)
 	{
-		return autservice.create(auteur);
+		return (Genre) genreSrv.create(Genre);
 	}
-	
-	 @JsonView(Views.Auteur.class)
+
+	@JsonView(Views.Genre.class)
 	@PutMapping("/{id}")
-	public Auteur modifierAuteur(@PathVariable Integer id,@RequestBody Auteur auteur)
+	public Genre modifierGenre(@PathVariable Integer id,@RequestBody Genre Genre)
 	{
-		auteur.setId(id);
-		return autservice.update(auteur);
+		Genre.setId(id);
+		return (Genre) genreSrv.update(Genre);
 	}
-	
+
 	@DeleteMapping("/{id}")
-	public void deleteAuteur(@PathVariable Integer id)
+	public void deleteGenre(@PathVariable Integer id)
 	{
-		autservice.deleteById(id);
+		genreSrv.deleteById(id);
 	}
-	
+
 
 }
