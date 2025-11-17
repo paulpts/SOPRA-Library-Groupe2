@@ -34,7 +34,7 @@ public class LivreRestController {
 
 	@JsonView(Views.Livre.class)
 	@GetMapping("/{id}")
-	public Livre ficheLivre(@PathVariable Integer id, Livre livre) {
+	public Livre ficheLivre(@PathVariable Integer id) {
 		return livreService.getById(id);
 	}
 
