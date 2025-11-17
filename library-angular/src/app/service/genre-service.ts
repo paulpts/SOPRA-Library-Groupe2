@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root',
 })
 export class GenreService {
-  private apiUrl: string = '/api/genre';
+  private apiUrl: string = 'http://localhost:8080/api/genre';
   private refresh$: Subject<void> = new Subject<void>();
 
   constructor(private http: HttpClient) { }

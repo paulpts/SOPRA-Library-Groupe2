@@ -10,7 +10,7 @@ import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } 
   selector: 'app-genre-page',
   imports: [ CommonModule, RouterLink, ReactiveFormsModule ],
   templateUrl: './genre-page.html',
-  styleUrl: './genre-page.css',
+  styleUrls: ['./genre-page.css'],
 })
 export class GenrePage implements OnInit {
   protected genres$!: Observable<GenreDto[]>;
