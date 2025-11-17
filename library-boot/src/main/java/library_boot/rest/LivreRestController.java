@@ -3,6 +3,8 @@ package library_boot.rest;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +20,7 @@ import library_boot.model.Livre;
 import library_boot.service.LivreService;
 import library_boot.view.Views;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/livre")
 public class LivreRestController {
@@ -29,12 +32,12 @@ public class LivreRestController {
 	@GetMapping
 	public List<Livre> allLivres()
 	{
-		return livreService.getAll();
+		return livreService.getAll(); 
 	}
 
 	@JsonView(Views.Livre.class)
 	@GetMapping("/{id}")
-	public Livre ficheLivre(@PathVariable Integer id, Livre livre) {
+	public Livre ficheLivre(@PathVariable Integer id) {
 		return livreService.getById(id);
 	}
 
