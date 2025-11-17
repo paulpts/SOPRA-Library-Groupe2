@@ -28,19 +28,19 @@ export class CollectionService {
     return this.http.get<CollectionDto>(`${ this.apiUrl }/${ id }`);
   }
 
-  public save(collectionDto: CollectionDto): Observable<CollectionDto> {
-    const payload = {...collectionDto};
+  public save(collectionDto: CollectionDto) {
+    const payload = collectionDto.toJson();
 
     if (!collectionDto.id) {
-      return this.http.post<CollectionDto>(this.apiUrl, payload);
+      this.http.post<CollectionDto>(this.apiUrl, payload).subscribe(()=>this.refresh());
     }
 else {
-    return this.http.put<CollectionDto>(`${this.apiUrl}/${collectionDto.id}`, payload);
+    this.http.put<CollectionDto>(`${this.apiUrl}/${collectionDto.id}`, payload).subscribe(()=>this.refresh());
   }
 }
 
-  public deleteById(id: number): Observable<void> {
-   return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  public deleteById(id: number){
+   this.http.delete<void>(`${this.apiUrl}/${id}`).subscribe(() => this.refresh());
   }
 
 }

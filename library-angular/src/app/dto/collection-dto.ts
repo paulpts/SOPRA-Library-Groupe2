@@ -20,7 +20,7 @@ export class CollectionDto {
 
     public toJson(): any {
         return {
-            nom: this._nom
+            nom: this.nom
         };
     }
 }
