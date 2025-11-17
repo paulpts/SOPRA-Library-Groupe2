@@ -1,8 +1,8 @@
 package library_boot.model;
 
 import java.time.LocalDate;
-import java.util.Collection;
-import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonView;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -12,6 +12,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import library_boot.view.Views;
 
 
 @Entity
@@ -20,35 +21,43 @@ public class Livre {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@JsonView(Views.Common.class)
 	protected Integer id;
 
 	@Column(length = 50,nullable = false)
+	@JsonView(Views.Common.class)
 	protected String titre;
 	
 	@Column(length = 300,nullable = false)
+	@JsonView(Views.Common.class)
 	protected String resumer;
 	
 	@Column(nullable = false)
+	@JsonView(Views.Common.class)
 	protected LocalDate annee;
 	
 	@ManyToOne
 	@JoinColumn(name="auteur",nullable = false)
+	@JsonView(Views.Livre.class)
 	protected Auteur auteur;
 	
 	@ManyToOne
 	@JoinColumn(name="editeur",nullable = false)
+	@JsonView(Views.Livre.class)
 	protected Editeur editeur;
 	
 	@ManyToOne
 	@JoinColumn(name="collection",nullable = false)
+	@JsonView(Views.Livre.class)
 	protected Collection collection;
 	
 	@ManyToOne
 	@JoinColumn(name="genre",nullable = false)
+	@JsonView(Views.Livre.class)
 	protected Genre genre;
 	
 	
-	public Livre() {};
+	public Livre() {}
 	
 	
 	

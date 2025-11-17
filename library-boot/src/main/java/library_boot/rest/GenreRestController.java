@@ -12,36 +12,41 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.annotation.JsonView;
 
 import library_boot.model.Genre;
 import library_boot.service.GenreService;
+import library_boot.view.Views;
 
 @RestController
-@RequestMapping("/api/Genre")
+@RequestMapping("/api/genre")
 public class GenreRestController {
 	@Autowired
 	GenreService genreSrv;
 
+	@JsonView(Views.Genre.class)
 	@GetMapping
 	public List<Genre> allGenres()
 	{
 		return genreSrv.getAll();
 	}
 
+	@JsonView(Views.Genre.class)
 	@GetMapping("/{id}")
 	public Genre ficheGenre(@PathVariable Integer id)
 	{
 		return genreSrv.getById(id);
 	}
 
+	@JsonView(Views.Genre.class)
 	@PostMapping
 	public Genre ajouterGenre(@RequestBody Genre Genre)
 	{
 		return (Genre) genreSrv.create(Genre);
 	}
 
+	@JsonView(Views.Genre.class)
 	@PutMapping("/{id}")
-
 	public Genre modifierGenre(@PathVariable Integer id,@RequestBody Genre Genre)
 	{
 		Genre.setId(id);
