@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AuteurPage } from './auteur-page';
+import { AuteurPage } from './page/auteur-page/auteur-page';
 
 describe('AuteurPage', () => {
   let component: AuteurPage;
@@ -10,7 +10,7 @@ describe('AuteurPage', () => {
     await TestBed.configureTestingModule({
       imports: [AuteurPage]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(AuteurPage);
     component = fixture.componentInstance;
