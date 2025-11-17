@@ -86,10 +86,10 @@ export class LivreDto {
             titre: this.titre,
             resumer: this.resumer,
             annee:this.annee,
-            auteur: this.auteur,
-            editeur: this.editeur,
-            collection:this.collection,
-            genre: this.genre
+            auteur: {"id":this.auteur},
+            editeur: {"id":this.editeur},
+            collection:{"id":this.collection},
+            genre: {"id":this.genre}
         }
     }
 
