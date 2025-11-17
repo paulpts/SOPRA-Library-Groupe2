@@ -5,6 +5,14 @@ import { Observable } from 'rxjs';
 import { LivreDto } from '../../dto/livre-dto';
 import { LivreService } from '../../service/livre-service';
 import { RouterLink } from "@angular/router";
+import { AuteurService } from '../../service/auteur-service';
+import { AuteurDto } from '../../dto/dto-auteur';
+import { CollectionService } from '../../service/collection-service';
+import { EditeurService } from '../../service/editeur-service';
+import { GenreService } from '../../service/genre-service';
+import { EditeurDto } from '../../dto/editeur-dto';
+import { CollectionDto } from '../../dto/collection-dto';
+import { GenreDto } from '../../dto/genre-dto';
 
 
 
@@ -28,9 +36,15 @@ export class LivrePage implements OnInit {
   protected genreCtrl!: FormControl;
   
   protected editingLivre!:LivreDto | null;
+
   
-  constructor(private formBuilder: FormBuilder, private livreSrv: LivreService){}
+  constructor(private formBuilder: FormBuilder, private livreSrv: LivreService, private auteurSrv:AuteurService, private collectionSrv: CollectionService, private editeurSrv:EditeurService, private genreSrv: GenreService){}
   
+  protected auteur$!: AuteurDto[];
+  protected editeur$!: EditeurDto[];
+  protected collection$!: CollectionDto[];
+  protected genre$!: GenreDto[];
+
   ngOnInit(): void {
     
     this.livre$ = this.livreSrv.findAll();
@@ -52,6 +66,27 @@ export class LivrePage implements OnInit {
       collection:this.collectionCtrl,
       genre:this.genreCtrl
     });
+
+
+      this.auteurSrv.findAll().subscribe({
+    next: data => this.auteur$ = data,
+    error: err => console.error(err)
+  });
+
+        this.editeurSrv.findAll().subscribe({
+    next: data => this.editeur$ = data,
+    error: err => console.error(err)
+  });
+
+        this.collectionSrv.findAll().subscribe({
+    next: data => this.collection$ = data,
+    error: err => console.error(err)
+  });
+
+        this.genreSrv.findAll().subscribe({
+    next: data => this.genre$ = data,
+    error: err => console.error(err)
+  });
   }
   
   public trackLivre(index: number, value: LivreDto) {
