@@ -1,17 +1,22 @@
 import { Component, OnInit} from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Observable } from 'rxjs';
+import { LivreDto } from '../../dto/livre-dto';
+import { LivreService } from '../../service/livre-service';
+import { RouterLink } from "@angular/router";
 
 
 
 @Component({
   selector: 'app-livre-page',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './livre-page.html',
   styleUrl: './livre-page.css',
 })
 export class LivrePage implements OnInit {
   
+  protected livre$!: Observable<LivreDto[]>;
   
   protected livreForm!: FormGroup;
   protected titreCtrl!: FormControl;
@@ -22,12 +27,14 @@ export class LivrePage implements OnInit {
   protected collectionCtrl!: FormControl;
   protected genreCtrl!: FormControl;
   
-  constructor(private formBuilder: FormBuilder){}
+  protected editingLivre!:LivreDto | null;
+  
+  constructor(private formBuilder: FormBuilder, private livreSrv: LivreService){}
   
   ngOnInit(): void {
-
-
-
+    
+    this.livre$ = this.livreSrv.findAll();
+    
     this.titreCtrl = this.formBuilder.control('',Validators.required);
     this.resumerCtrl = this.formBuilder.control('',[Validators.required,Validators.maxLength(300)]);
     this.anneeCtrl = this.formBuilder.control('',Validators.required);
@@ -36,15 +43,76 @@ export class LivrePage implements OnInit {
     this.collectionCtrl = this.formBuilder.control('',Validators.required);
     this.genreCtrl = this.formBuilder.control('',Validators.required);
     
-    this.livreForm=this.formBuilder.group({
+    this.livreForm=this.formBuilder.group({ 
       titre:this.titreCtrl,
-      resumer:this.titreCtrl,
-      annee:this.titreCtrl,
-      auteur:this.titreCtrl,
-      editeur:this.titreCtrl,
-      collection:this.titreCtrl,
-      genre:this.titreCtrl
+      resumer:this.resumerCtrl,
+      annee:this.anneeCtrl,
+      auteur:this.auteurCtrl,
+      editeur:this.editeurCtrl,
+      collection:this.collectionCtrl,
+      genre:this.genreCtrl
     });
+  }
+  
+  public trackLivre(index: number, value: LivreDto) {
+    return value.id;
+  }
+  
+
+  //------------------------------------------------------------------
+  public creerModifier() {
+    if (this.editingLivre) {
+      this.livreSrv.save(new LivreDto(
+        this.editingLivre.id, 
+        this.titreCtrl.value,
+        this.resumerCtrl.value,
+        this.anneeCtrl.value,
+        this.auteurCtrl.value,
+        this.editeurCtrl.value,
+        this.collectionCtrl.value,
+        this.genreCtrl.value
+      ));
+    }
+    
+    else {
+      this.livreSrv.save(new LivreDto(0, 
+        this.titreCtrl.value,
+        this.resumerCtrl.value,
+        this.anneeCtrl.value,
+        this.auteurCtrl.value,
+        this.editeurCtrl.value,
+        this.collectionCtrl.value,
+        this.genreCtrl.value
+      ));
+    }
+    
+    this.editingLivre = null;
+    this.titreCtrl.setValue("");
+    this.resumerCtrl.setValue("");
+    this.anneeCtrl.setValue("");
+    this.auteurCtrl.setValue("");
+    this.editeurCtrl.setValue("");
+    this.collectionCtrl.setValue("");
+    this.genreCtrl.setValue("");
+  }
+  
+//------------------------------------------------------------------
+
+
+  public editerLivre(livre: LivreDto){
+    this.editingLivre=livre;
+    this.titreCtrl.setValue(livre.titre);
+    this.resumerCtrl.setValue(livre.resumer);
+    this.anneeCtrl.setValue(livre.annee);
+    this.auteurCtrl.setValue(livre.auteur);
+    this.editeurCtrl.setValue(livre.editeur);
+    this.collectionCtrl.setValue(livre.collection);
+    this.genreCtrl.setValue(livre.genre);
+    
+  }
+  
+  public supprimerLivre(livre: LivreDto){
+    this.livreSrv.deleteById(livre.id);
   }
   
 }
