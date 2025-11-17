@@ -104,10 +104,10 @@ export class LivrePage implements OnInit {
     this.titreCtrl.setValue(livre.titre);
     this.resumerCtrl.setValue(livre.resumer);
     this.anneeCtrl.setValue(livre.annee);
-    this.auteurCtrl.setValue(livre.auteur);
-    this.editeurCtrl.setValue(livre.editeur);
-    this.collectionCtrl.setValue(livre.collection);
-    this.genreCtrl.setValue(livre.genre);
+    this.auteurCtrl.setValue(livre.auteur.id);
+    this.editeurCtrl.setValue(livre.editeur.id);
+    this.collectionCtrl.setValue(livre.collection.id);
+    this.genreCtrl.setValue(livre.genre.id);
     
   }
   
