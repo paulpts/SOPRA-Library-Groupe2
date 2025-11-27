@@ -1,0 +1,17 @@
+FROM maven:3.9.11-eclipse-temurin-21
+
+WORKDIR /app
+
+COPY pom.xml .
+
+# Télécharger les dépendances Maven
+# L'option -B permet d'exécuter la commande maven en mode Batch (pas d'interaction avec l'utilisateur)
+RUN mvn dependency:go-offline -B
+
+COPY ./src ./src
+
+RUN mvn package
+
+CMD [ "java", "-jar", "target/bibliotek-boot-0.0.1-SNAPSHOT.jar" ]
+
+EXPOSE 8080

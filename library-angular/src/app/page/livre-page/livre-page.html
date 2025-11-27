@@ -20,30 +20,63 @@
             <span>Le libellé est obligatoire</span>
         }
     </div>
-    <div>
+    
+    <!-- <div>
         <input type="text" formControlName="auteur" placeholder="Auteur">
         @if (auteurCtrl.hasError('required')) {
-            <span>Le libellé est obligatoire</span>
+        <span>Le libellé est obligatoire</span>
         }
+    </div> -->
+    
+     <div>
+    <select formControlName="auteur">
+        <option [value]="''">-- Choisir un auteur --</option>
+        <option *ngFor="let a of auteur$" [value]="a.id">{{ a.nom }}</option>
+    </select>
     </div>
-    <div>
+    
+    
+    <!-- <div>
         <input type="text" formControlName="editeur" placeholder="Editeur">
         @if (editeurCtrl.hasError('required')) {
             <span>Le libellé est obligatoire</span>
         }
+    </div> -->
+     <div>
+    <select formControlName="editeur">
+        <option [value]="''">-- Choisir un éditeur --</option>
+        <option *ngFor="let e of editeur$" [value]="e.id">{{ e.nom }}</option>
+    </select>
     </div>
+<!--     
     <div>
         <input type="text" formControlName="collection" placeholder="Collection">
         @if (collectionCtrl.hasError('required')) {
             <span>Le libellé est obligatoire</span>
         }
+    </div> -->
+     <div>
+    <select formControlName="collection">
+        <option [value]="''">-- Choisir une collection --</option>
+        <option *ngFor="let c of collection$" [value]="c.id">{{ c.nom }}</option>
+    </select>
     </div>
-    <div>
+    
+    
+    <!-- <div>
         <input type="text" formControlName="genre" placeholder="Genre">
         @if (genreCtrl.hasError('required')) {
             <span>Le libellé est obligatoire</span>
         }
+    </div> -->
+    <div>
+    <select formControlName="genre">
+        <option [value]="''">-- Choisir un genre --</option>
+        <option *ngFor="let g of genre$" [value]="g.id">{{ g.libelle }}</option>
+    </select>
     </div>
+    
+    
     @if (editingLivre) {
         <input type="submit" [disabled]="livreForm.invalid" value="Modifier" />
     }
