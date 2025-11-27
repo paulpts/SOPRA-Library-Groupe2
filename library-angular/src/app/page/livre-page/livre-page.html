@@ -1,0 +1,120 @@
+<h1>Liste des livres</h1>
+
+<form (ngSubmit)="creerModifier()" [formGroup]="livreForm">
+    
+    <div>
+        <input type="text" formControlName="titre" placeholder="Titre">
+        @if (titreCtrl.hasError('required')) {
+            <span>Le libellé est obligatoire</span>
+        }
+    </div>
+    <div>
+        <input type="text" formControlName="resumer" placeholder="Résumé">
+        @if (resumerCtrl.hasError('required')) {
+            <span>Le libellé est obligatoire</span>
+        }
+    </div>
+    <div>
+        <input type="number" formControlName="annee" placeholder="Année">
+        @if (anneeCtrl.hasError('required')) {
+            <span>Le libellé est obligatoire</span>
+        }
+    </div>
+    
+    <!-- <div>
+        <input type="text" formControlName="auteur" placeholder="Auteur">
+        @if (auteurCtrl.hasError('required')) {
+        <span>Le libellé est obligatoire</span>
+        }
+    </div> -->
+    
+     <div>
+    <select formControlName="auteur">
+        <option [value]="''">-- Choisir un auteur --</option>
+        <option *ngFor="let a of auteur$" [value]="a.id">{{ a.nom }}</option>
+    </select>
+    </div>
+    
+    
+    <!-- <div>
+        <input type="text" formControlName="editeur" placeholder="Editeur">
+        @if (editeurCtrl.hasError('required')) {
+            <span>Le libellé est obligatoire</span>
+        }
+    </div> -->
+     <div>
+    <select formControlName="editeur">
+        <option [value]="''">-- Choisir un éditeur --</option>
+        <option *ngFor="let e of editeur$" [value]="e.id">{{ e.nom }}</option>
+    </select>
+    </div>
+<!--     
+    <div>
+        <input type="text" formControlName="collection" placeholder="Collection">
+        @if (collectionCtrl.hasError('required')) {
+            <span>Le libellé est obligatoire</span>
+        }
+    </div> -->
+     <div>
+    <select formControlName="collection">
+        <option [value]="''">-- Choisir une collection --</option>
+        <option *ngFor="let c of collection$" [value]="c.id">{{ c.nom }}</option>
+    </select>
+    </div>
+    
+    
+    <!-- <div>
+        <input type="text" formControlName="genre" placeholder="Genre">
+        @if (genreCtrl.hasError('required')) {
+            <span>Le libellé est obligatoire</span>
+        }
+    </div> -->
+    <div>
+    <select formControlName="genre">
+        <option [value]="''">-- Choisir un genre --</option>
+        <option *ngFor="let g of genre$" [value]="g.id">{{ g.libelle }}</option>
+    </select>
+    </div>
+    
+    
+    @if (editingLivre) {
+        <input type="submit" [disabled]="livreForm.invalid" value="Modifier" />
+    }
+    @else {
+        <input type="submit" [disabled]="livreForm.invalid" value="Créer" />
+    }
+</form>
+
+<hr/>
+
+
+<table>
+    <thead>
+        <tr>
+            <th>Titre</th>
+            <th>Résumé</th>
+            <th>Année</th>
+            <th>Auteur</th>
+            <th>Editeur</th>
+            <th>Collection</th>
+            <th>Genre</th>
+            <th></th>
+        </tr>
+    </thead>
+    
+    <tbody>
+        <tr *ngFor="let l of livre$ | async; trackBy: trackLivre">
+            <td><a [routerLink]="['/livre',l.id]">{{l.titre}}</a></td>
+            <td><a [routerLink]="['/livre',l.id]">{{l.resumer}}</a></td>
+            <td><a [routerLink]="['/livre',l.id]">{{l.annee}}</a></td>
+            <td><a [routerLink]="['/livre',l.id]">{{l.auteur.nom}}</a></td>
+            <td><a [routerLink]="['/livre',l.id]">{{l.editeur.nom}}</a></td>
+            <td><a [routerLink]="['/livre',l.id]">{{l.collection.nom}}</a></td>
+            <td><a [routerLink]="['/livre',l.id]">{{l.genre.libelle}}</a></td>
+            <td>
+                <button (click)="editerLivre(l)">Modifier</button>
+                <button (click)="supprimerLivre(l)">Supprimer</button>
+            </td>
+        </tr>
+    </tbody>
+</table>

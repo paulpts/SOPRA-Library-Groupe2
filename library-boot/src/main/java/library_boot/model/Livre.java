@@ -34,7 +34,7 @@ public class Livre {
 	
 	@Column(nullable = false)
 	@JsonView(Views.Common.class)
-	protected LocalDate annee;
+	protected int annee;
 	
 	@ManyToOne
 	@JoinColumn(name="auteur",nullable = false)
@@ -61,7 +61,7 @@ public class Livre {
 	
 	
 	
-	public Livre(String titre, String resumer, LocalDate annee, Auteur auteur, Editeur editeur, Collection collection,
+	public Livre(String titre, String resumer, int annee, Auteur auteur, Editeur editeur, Collection collection,
 			Genre genre) {
 		this.titre = titre;
 		this.resumer = resumer;
@@ -98,11 +98,11 @@ public class Livre {
 		this.resumer = resumer;
 	}
 
-	public LocalDate getAnnee() {
+	public int getAnnee() {
 		return annee;
 	}
 
-	public void setAnnee(LocalDate annee) {
+	public void setAnnee(int annee) {
 		this.annee = annee;
 	}
 

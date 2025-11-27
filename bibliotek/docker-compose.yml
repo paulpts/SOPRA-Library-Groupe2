@@ -1,0 +1,58 @@
+name: bibliotek-compose
+
+services:
+  mysql:
+    image: mysql:8.0.44
+    container_name: bibliotek-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      timeout: 10s
+      retries: 10
+
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./bibliotek-init.sql:/docker-entrypoint-initdb.d/setup.sql
+
+    networks:
+      - bibliotek
+
+
+  boot:
+    image: ajc/bibliotek:boot
+    container_name: bibliotek-boot
+
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql/bibiotek
+      SPRING_DATASOURCE_PASSWORD: root
+
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+    networks:
+      - bibliotek
+
+
+  angular:
+    image: ajc/bibliotek:angular
+    container_name: bibliotek-angular
+
+    ports:
+      - 5000:80
+
+    depends_on:
+      - boot
+
+    networks:
+      - bibliotek
+
+volumes:
+  db_data:
+    name: bibliotek-db-data
+
+networks:
+  bibliotek:
+    name: bibliotek
