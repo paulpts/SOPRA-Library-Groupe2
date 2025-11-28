@@ -2,10 +2,12 @@ package bibliotek.repo;
 
 import java.util.Optional;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import bibliotek.model.Utilisateur;
+import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
-import fr.bibliotek.model.Utilisateur;
-
-public interface UtilisateurRepository extends JpaRepository<Utilisateur, String> {
-    public Optional<Utilisateur> findByUsername(String username);
+public class UtilisateurRepository implements PanacheRepositoryBase<Utilisateur, String> {
+	
+    public Optional<Utilisateur> findByUsername(String username) {
+    	 return find("username", username).firstResultOptional();
+    }
 }
