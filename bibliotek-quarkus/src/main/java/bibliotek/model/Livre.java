@@ -1,7 +1,7 @@
 package bibliotek.model;
 
 import java.time.LocalDate;
-import java.util.Collection;
+import bibliotek.model.Collection;
 
 import org.hibernate.annotations.UuidGenerator;
 
