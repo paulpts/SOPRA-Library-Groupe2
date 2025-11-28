@@ -46,7 +46,7 @@ public class CollectionResource {
     @Path("/{id}")
     @GET
     @RolesAllowed({ "admin", "user" })
-    public Response findById(@PathParam("id") int id) {
+    public Response findById(@PathParam("id") String id) {
         log.debug("Rechercher la collection {}", id);
 
         Optional<Collection> optCollection = this.service.findById(id);
@@ -69,7 +69,7 @@ public class CollectionResource {
     @Path("/{id}")
     @PUT
     @RolesAllowed("admin")
-    public int update(@PathParam("id") int id, @Valid CreateOrUpdateCollectionRequest request) {
+    public String update(@PathParam("id") String id, @Valid CreateOrUpdateCollectionRequest request) {
         log.debug("Mettre à jour la collection {}", id);
 
         this.service.update(id, request);
@@ -80,7 +80,7 @@ public class CollectionResource {
     @Path("/{id}")
     @DELETE
     @RolesAllowed("admin")
-    public boolean deleteById(@PathParam("id") int id) {
+    public boolean deleteById(@PathParam("id") String id) {
         log.debug("Supprimer la collection {}", id);
 
         return this.service.deleteById(id);

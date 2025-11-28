@@ -29,7 +29,7 @@ public class CollectionService {
         return this.repository.findAll().stream();
     }
 
-    public Optional<Collection> findById(int id) {
+    public Optional<Collection> findById(String id) {
         log.debug("Récupération de la collection {}", id);
 
         return this.repository.findByIdOptional(id);
@@ -49,7 +49,7 @@ public class CollectionService {
     }
 
     @Transactional
-    public Collection update(int id, CreateOrUpdateCollectionRequest request) {
+    public Collection update(String id, CreateOrUpdateCollectionRequest request) {
         log.debug("Mise à jour de la collection {}", id);
 
         Collection collection = this.repository.findByIdOptional(id).orElseThrow(NotFoundException::new);
@@ -62,7 +62,7 @@ public class CollectionService {
     }
 
     @Transactional
-    public boolean deleteById(int id) {
+    public boolean deleteById(String id) {
         log.debug("Suppression de la collection {}", id);
 
         try {

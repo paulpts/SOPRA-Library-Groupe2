@@ -5,6 +5,6 @@ import jakarta.enterprise.context.ApplicationScoped;
 import bibliotek.model.Editeur;
 
 @ApplicationScoped
-public class EditeurRepository implements PanacheRepositoryBase<Editeur, Integer> {
+public class EditeurRepository implements PanacheRepositoryBase<Editeur, String> {
 
 }

@@ -52,7 +52,7 @@ public class EditeurService {
     }
 
     @Transactional
-    public void update(String id, CreateOrUpdateEditeurRequest request) {
+    public Editeur update(String id, CreateOrUpdateEditeurRequest request) {
         log.debug("Mise à jour de l'éditeur {}", id);
 
        Editeur editeur = this.repository.findByIdOptional(id).orElseThrow(NotFoundException::new);
@@ -67,7 +67,7 @@ public class EditeurService {
 
     
     @Transactional
-    public boolean deleteById(int id) {
+    public boolean deleteById(String id) {
         log.debug("Suppression de l'editeur {}", id);
 
         try {

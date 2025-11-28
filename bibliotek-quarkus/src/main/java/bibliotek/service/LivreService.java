@@ -74,17 +74,17 @@ public class LivreService {
         }
     }
 
-    @Transactional
+    
     private Livre save(Livre livre, CreateOrUpdateLivreRequest request) {
         livre.setNom(request.getNom());
         livre.setResume(request.getResume());
         livre.setPublication(request.getPublication());
 
-        livre.setAuteur(this.auteurRepository.getReferenceById(request.getAuteurId()));
-        livre.setEditeur(this.editeurRepository.getReferenceById(request.getEditeurId()));
+        livre.setAuteur(this.auteurRepository.findById(request.getAuteurId()));
+        livre.setEditeur(this.editeurRepository.findById(request.getEditeurId()));
 
         if (request.getCollectionId() != null && !request.getCollectionId().isBlank()) {
-            livre.setCollection(this.collectionRepository.getReferenceById(request.getCollectionId()));
+            livre.setCollection(this.collectionRepository.findById(request.getCollectionId()));
         }
 
         else {

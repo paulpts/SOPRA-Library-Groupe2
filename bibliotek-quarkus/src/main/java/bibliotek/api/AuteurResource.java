@@ -24,7 +24,7 @@ import bibliotek.dto.request.CreateOrUpdateAuteurRequest;
 
 
 @Path("/auteur")
-@Authenticated
+//@Authenticated
 public class AuteurResource {
     private final static Logger log = LoggerFactory.getLogger(AuteurResource.class);
 
