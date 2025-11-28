@@ -11,7 +11,6 @@ import bibliotek.dto.response.CollectionResponse;
 import bibliotek.model.Collection;
 import bibliotek.service.CollectionService;
 import io.quarkus.security.Authenticated;
-import jakarta.annotation.security.PermitAll;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.DELETE;
@@ -36,7 +35,7 @@ public class CollectionResource {
     }
 
     @GET
-    @PermitAll
+    @RolesAllowed({ "admin", "user" })
     public List<CollectionResponse> findAll() {
         log.debug("Lister les collections");
 

@@ -12,6 +12,7 @@ import bibliotek.dto.response.EntityUpdatedResponse;
 import bibliotek.dto.response.LivreResponse;
 import bibliotek.model.Livre;
 import bibliotek.service.LivreService;
+import io.quarkus.security.Authenticated;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.DELETE;
@@ -24,6 +25,7 @@ import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
 
 @Path("/livre")
+@Authenticated
 public class LivreResource {
     
     private final static Logger log = LoggerFactory.getLogger(LivreService.class);

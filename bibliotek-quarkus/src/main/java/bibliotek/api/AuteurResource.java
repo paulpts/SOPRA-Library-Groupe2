@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 
 import bibliotek.service.AuteurService;
 import io.quarkus.security.Authenticated;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
@@ -24,7 +25,7 @@ import bibliotek.dto.request.CreateOrUpdateAuteurRequest;
 
 
 @Path("/auteur")
-//@Authenticated
+@Authenticated
 public class AuteurResource {
     private final static Logger log = LoggerFactory.getLogger(AuteurResource.class);
 
@@ -35,6 +36,7 @@ public class AuteurResource {
     }
 
     @GET
+     @RolesAllowed({ "admin", "user" })
     public List<AuteurResponse> findAll() {
         log.debug("Lister les auteurs");
 
@@ -43,6 +45,7 @@ public class AuteurResource {
 
     @Path("/{id}")
     @GET
+     @RolesAllowed({ "admin", "user" })
     public Response findById(@PathParam("id") String id) {
         log.debug("Rechercher l'auteur {}", id);
 
@@ -56,6 +59,7 @@ public class AuteurResource {
     }
 
     @POST
+    @RolesAllowed("admin")
     public String create(@Valid CreateOrUpdateAuteurRequest request) {
         log.debug("Créer un auteur {}", request.getNom());
 
@@ -64,6 +68,7 @@ public class AuteurResource {
 
     @Path("/{id}")
     @PUT
+    @RolesAllowed("admin")
     public String update(@PathParam("id") String id, @Valid CreateOrUpdateAuteurRequest request) {
         log.debug("Mettre à jour un auteur {}", id);
 
@@ -74,6 +79,7 @@ public class AuteurResource {
 
     @Path("/{id}")
     @DELETE
+    @RolesAllowed("admin")
     public boolean deleteById(@PathParam("id") String id) {
         log.debug("Supprimer l'auteur {}", id);
 

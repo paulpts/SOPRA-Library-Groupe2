@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import io.quarkus.security.Authenticated;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
@@ -21,6 +22,7 @@ import bibliotek.dto.request.CreateOrUpdateEditeurRequest;
 import bibliotek.dto.response.EditeurResponse;
 import bibliotek.model.Editeur;
 import bibliotek.service.EditeurService;
+
 @Path("/editeur")
 @Authenticated
 public class EditeurResource {
@@ -34,6 +36,7 @@ public class EditeurResource {
     }
 
     @GET
+    @RolesAllowed({ "admin", "user" })
     public List<EditeurResponse> findAll() {
         log.debug("Lister les éditeurs");
 
@@ -42,6 +45,7 @@ public class EditeurResource {
 
     @Path("/{id}")
     @GET
+    @RolesAllowed({ "admin", "user" })
     public Response findById(@PathParam("id") String id) {
         log.debug("Rechercher l'éditeur {}", id);
 
@@ -55,6 +59,7 @@ public class EditeurResource {
     }
 
     @POST
+    @RolesAllowed("admin")
     public String create(@Valid CreateOrUpdateEditeurRequest request) {
         log.debug("Créer l'éditeur {}", request.getNom());
 
@@ -63,6 +68,7 @@ public class EditeurResource {
 
     @Path("/{id}")
     @PUT
+    @RolesAllowed("admin")
     public String update(@PathParam("id") String id, @Valid CreateOrUpdateEditeurRequest request) {
         log.debug("Mettre à jour l'éditeur {}", id);
 
@@ -73,6 +79,7 @@ public class EditeurResource {
 
     @Path("/{id}")
     @DELETE
+    @RolesAllowed("admin")
     public boolean deleteById(@PathParam("id") String id) {
         log.debug("Supprimer l'éditeur {}", id);
 

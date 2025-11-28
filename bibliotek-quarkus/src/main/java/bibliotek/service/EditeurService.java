@@ -41,7 +41,7 @@ public class EditeurService {
         log.debug("Création d'un nouvel éditeur {}", request.getNom());
 
         Editeur editeur = new Editeur();
-        editeur.setId(UUID.randomUUID().toString());
+        //editeur.setId(UUID.randomUUID().toString());
 
         editeur.setNom(request.getNom());
         editeur.setPays(request.getPays());
