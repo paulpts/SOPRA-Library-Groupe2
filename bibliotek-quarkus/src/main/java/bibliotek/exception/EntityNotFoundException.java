@@ -1,9 +1,11 @@
-package fr.bibliotek.exception;
+package bibliotek.exception;
 
-import org.jboss.resteasy.reactive.ResponseStatus;
-import org.springframework.http.HttpStatus;
+import jakarta.ws.rs.WebApplicationException;
+import jakarta.ws.rs.core.Response;
 
-@ResponseStatus(HttpStatus.NOT_FOUND)
-public class EntityNotFoundException extends RuntimeException {
+public class EntityNotFoundException extends WebApplicationException {
 
+    public EntityNotFoundException(String message) {
+        super(message, Response.Status.NOT_FOUND);
+    }
 }

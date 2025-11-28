@@ -11,6 +11,8 @@ import bibliotek.dto.response.CollectionResponse;
 import bibliotek.model.Collection;
 import bibliotek.service.CollectionService;
 import io.quarkus.security.Authenticated;
+import jakarta.annotation.security.PermitAll;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
@@ -34,6 +36,7 @@ public class CollectionResource {
     }
 
     @GET
+    @PermitAll
     public List<CollectionResponse> findAll() {
         log.debug("Lister les collections");
 
@@ -42,6 +45,7 @@ public class CollectionResource {
 
     @Path("/{id}")
     @GET
+    @RolesAllowed({ "admin", "user" })
     public Response findById(@PathParam("id") int id) {
         log.debug("Rechercher la collection {}", id);
 
@@ -55,14 +59,16 @@ public class CollectionResource {
     }
 
     @POST
-    public int create(@Valid CreateOrUpdateCollectionRequest request) {
-        log.debug("Créer la collection {}", request.getLibelle());
+    @RolesAllowed("admin")
+    public String create(@Valid CreateOrUpdateCollectionRequest request) {
+        log.debug("Créer la collection {}", request.getNom());
 
         return this.service.create(request).getId();
     }
 
     @Path("/{id}")
     @PUT
+    @RolesAllowed("admin")
     public int update(@PathParam("id") int id, @Valid CreateOrUpdateCollectionRequest request) {
         log.debug("Mettre à jour la collection {}", id);
 
@@ -73,6 +79,7 @@ public class CollectionResource {
 
     @Path("/{id}")
     @DELETE
+    @RolesAllowed("admin")
     public boolean deleteById(@PathParam("id") int id) {
         log.debug("Supprimer la collection {}", id);
 
